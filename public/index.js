@@ -19,8 +19,6 @@ sio.on('connect_error', (e) =>{
     console.log(e.message);
 });
 
-
-
 sio.on('disconnect', () =>{
   console.log('disconnected');
 });
@@ -37,4 +35,13 @@ sio.on('client_count', (count) =>{
 
 sio.on('room_count', (count) => {
   console.log('There are ' + count + ' clients in my room.');
+});
+
+
+sio.on('user_joined', (username) => {
+  console.log('User ' + username + ' has joined.');
+});
+
+sio.on('user_left', (username) => {
+  console.log('User ' + username + ' has left.');
 });

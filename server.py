@@ -1,5 +1,8 @@
 import socketio
 import random
+from pynput.keyboard import Key, Listener
+
+
 
 '''
 TO RUN THE SERVER PASTE THIS INTO THE TERMINAL:
@@ -7,15 +10,14 @@ uvicorn server:app
 TO STOP THE SERVER SIMPLY HOLD Ctrl AND PRESS c:
 Ctrl + c
 MAKE SURE YOU HAVE VENV ACTIVATED BEFORE STARTING:
-cd D:/Projekt-Colarič
-./venv/scripts/activate
 '''
 
 
 sio = socketio.AsyncServer(async_mode='asgi')
 app = socketio.ASGIApp(sio, static_files = {
     '/': './public/index.html',
-    '/index.js': './public/index.js'
+    '/index.js': './public/index.js',
+    '/functions.js': './public/functions.js'
 })
 client_count = 0
 a_count= 0
@@ -31,8 +33,7 @@ async def task(sid):
 @sio.event
 async def connect(sid, environ):
     global client_count
-    global a_count
-    global b_count
+
 
     username = environ.get('HTTP_X_USERNAME')
     print('username:', username)
@@ -43,11 +44,10 @@ async def connect(sid, environ):
         session['username'] = username
     await sio.emit('user_joined', username)
 
-    client_count += 1
-    print(sid, 'connected')
-    sio.start_background_task(task,sid)
-    await sio.emit('client_count', client_count)
-    if random.random() > 0.5:
+    global a_count
+    global b_count
+
+    if random.random(0,1) > 0.5:
         sio.enter_room(sid, 'a')
         a_count += 1
         await sio.emit('room_count', a_count, to='a')
@@ -55,6 +55,10 @@ async def connect(sid, environ):
         sio.enter_room(sid, 'b')
         b_count += 1
         await sio.emit('room_count', b_count, to='b')
+    client_count += 1
+    print(sid, 'connected')
+    sio.start_background_task(task,sid)
+    await sio.emit('client_count', client_count)
 
 @sio.event
 async def disconnect(sid):
@@ -78,5 +82,3 @@ async def disconnect(sid):
 async def sum(sid, data):
     result = data['numbers'][0] + data['numbers'][1]
     return result
-
-

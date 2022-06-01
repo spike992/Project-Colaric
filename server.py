@@ -1,10 +1,10 @@
 import socketio
 import random
-from pynput.keyboard import Key, Listener
 
-
+"https://levelup.gitconnected.com/data-stream-from-your-webcam-and-microphone-videochat-with-javascript-step-1-29895b70808b"
 
 '''
+Set-ExecutionPolicy -ExecutionPolicy bypass -scope CurrentUser
 TO RUN THE SERVER PASTE THIS INTO THE TERMINAL:
 uvicorn server:app
 TO STOP THE SERVER SIMPLY HOLD Ctrl AND PRESS c:
@@ -47,7 +47,7 @@ async def connect(sid, environ):
     global a_count
     global b_count
 
-    if random.random(0,1) > 0.5:
+    if random.random() > 0.5:
         sio.enter_room(sid, 'a')
         a_count += 1
         await sio.emit('room_count', a_count, to='a')

@@ -4,84 +4,43 @@
 <meta charset="utf-8">
 <title>Postavitev strani: Position</title>
   <style>
-    #video {
-        border: 1px solid black;
-        width: 320px;
-        height: 240px;
-    }
+body {
+  text-align: center;
+}
 
-    #photo {
-        border: 1px solid black;
-        width: 320px;
-        height: 240px;
-    }
+video {
+  width: 500px;
+  height: 500px;
+  margin: 20px;
+}
 
-    #canvas {
-        display: none;
-    }
-
-    .camera {
-        width: 340px;
-        display: inline-block;
-    }
-
-    .output {
-        width: 340px;
-        display: inline-block;
-    }
-
-    #startbutton {
-        display: block;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        bottom: 36px;
-        padding: 5px;
-        background-color: #6a67ce;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        font-size: 14px;
-        color: rgba(255, 255, 255, 1.0);
-        cursor: pointer;
-    }
-
-    .contentarea {
-        font-size: 16px;
-        font-family: Arial;
-        text-align: center;
-    }
-    </style>
+button {
+  padding: 5px;
+  background-color: seagreen;
+  color: white;
+  border-radius: 3px;
+  font-weight: bold;
+}
+    </style>s
 </head>
 
 <body>
   <h1> SOCKETIO</h1>
   <h2>lolol</h2>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js">
-  </script>
-  <script src="/index.js"></script>
-<form>
-   Ime: <input type="text" name="#" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
+  <script src="index.js"></script>
+
+<form action="http://127.0.0.1:8000/" method="get">
+   Ime: <input type="text" id="myparam" name="myparam" />
+    <input type="submit" value="Submit" />
 </form>
-
-<!doctype html>
-
-    <div class="contentarea">
-        <h1>
-            Using Javascript to capture Photo
-        </h1>
-        <div class="camera">
-            <video id="video">Video stream not available.</video>
-        </div>
-        <div><button id="startbutton">Take photo</button></div>
-        <canvas id="canvas"></canvas>
+    <div>
+    <video id="video" controls autoplay></video>
     </div>
-
-    <form id="form" onsubmit="return false;">
-        <input type="text" id="userInput">
-        <input type="submit"    onclick="name()">
-    </form>
-
-
-    <script src="/functions.js"></script>
+    <div>
+    <button id="button">Start Video</button>
+  </div>
+  <script src="functions.js"></script>
 </body>
 </html>
 

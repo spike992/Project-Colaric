@@ -1,5 +1,6 @@
-import socketio
-import random
+from flask import Flask, request, render_template
+from flask_socketio import SocketIO, emit
+from asgiref.wsgi import WsgiToAsgi
 
 "https://levelup.gitconnected.com/data-stream-from-your-webcam-and-microphone-videochat-with-javascript-step-1-29895b70808b"
 
@@ -12,7 +13,33 @@ Ctrl + c
 MAKE SURE YOU HAVE VENV ACTIVATED BEFORE STARTING:
 '''
 
+app = Flask(__name__)
+socket = SocketIO(app)
+wsgi = WsgiToAsgi(app)
 
+
+@app.route('/')
+async def index():
+    return render_template('index.html')
+
+@socket.on('data')
+async def connect():
+    print("[CLIENT CONNECTED]:", request.sid)
+
+@socket.on('data')
+async def disconn():
+    print("[CLIENT DISCONNECTED]:", request.sid)
+
+@socket.on('data')
+async def notify(user):
+    await sio.emit('notify', user, broadcast=True, skip_sid=request.sid)
+
+@socket.on('data')
+async def emitback(data):
+    await sio.emit('returndata', data, broadcast=True)
+
+
+'''''
 sio = socketio.AsyncServer(async_mode='asgi')
 app = socketio.ASGIApp(sio, static_files = {
     '/': './public/index.html',
@@ -82,3 +109,5 @@ async def disconnect(sid):
 async def sum(sid, data):
     result = data['numbers'][0] + data['numbers'][1]
     return result
+    
+    '''

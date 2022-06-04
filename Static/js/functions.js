@@ -18,3 +18,4 @@ document.querySelector('form').addEventListener("submit", function (e) {
     let param = document.querySelector('input[name="myparam"]').value;
     window.location.href = 'http://127.0.0.1:8000/' + "#" + param;
 });
+
